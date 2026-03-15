@@ -1,0 +1,51 @@
+<div class="services-container">
+  <h2 [style.color]="dataService.homeData()?.primary_color">Services disponibles</h2>
+  <div class="services-grid">
+    @if (dataService.serviceList().length > 0) {
+      @for (service of dataService.serviceList(); track service.id) {
+        <div class="service-card">
+          <div class="card-content">
+            <h3>{{ service.name }} {{ service.icon }}</h3>
+            <p>Description du service : {{ service.description }}</p>
+            <div class="card-footer">
+              <div class="price-tag" [style.background-color]="dataService.homeData()?.primary_color">
+                @if (service.is_on_quote) {
+                  <span>Sur devis</span>
+                } @else {
+                  <span>{{ service?.price | ariary }}</span>
+                }
+              </div>
+              <a [routerLink]="['/services', service.id]" class="details-btn">
+                Voir détail
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    } @else if (dataService.errorStatus()) {
+      <div class="error-wrapper-full">
+        <div class="error-container">
+          <div class="error-icon">⚠️</div>
+          <h2>Service indisponible</h2>
+          <p>Impossible de charger la liste des services.</p>
+          <button (click)="dataService.loadServiceListData()" class="retry-btn">Réessayer</button>
+        </div>
+      </div>
+    } @else {
+      @for (i of [1,2,3,4,5,6]; track i) {
+        <div class="service-card skeleton">
+          <div class="card-content">
+            <div class="skeleton-title"></div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text short"></div>
+            <div class="card-footer">
+              <div class="skeleton-price"></div>
+              <div class="skeleton-btn"></div>
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>

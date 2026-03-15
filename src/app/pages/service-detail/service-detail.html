@@ -1,0 +1,88 @@
+<div class="detail-wrapper">
+  @if (prev(); as prev) {
+    <a [routerLink]="['/services', prev.id]" class="side-nav prev" title="Précédent">
+      <span class="arrow">‹</span>
+    </a>
+  }
+
+  @if (dataService.serviceDetail(); as service) {
+    <div class="detail-container">
+      <div class="top-nav-bar">
+        <button class="back-btn" (click)="goBack()">
+          <span class="icon">←</span> Retour aux services
+        </button>
+        <span class="nav-count">{{ currentIndex() + 1 }} / {{ dataService.serviceList().length }}</span>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-content">
+          <div class="header-section">
+            <h1 [style.color]="dataService.homeData()?.primary_color">
+              {{ service.name }} 
+            </h1>
+            
+            <div class="price-box" [style.background-color]="dataService.homeData()?.primary_color">
+              @if (dataService.serviceDetail()?.is_on_quote) {
+                <span>Sur devis</span>
+                } @else {
+                <span>{{ dataService.serviceDetail()?.price | ariary }}</span>
+                }
+            </div>
+          </div>
+          <div class="content-section">
+            <h3>Description du service</h3>
+            <p class="description-text">
+              {{ service.description }}
+            </p>
+          </div>
+
+          <div class="action-section">
+            <p>Ce service vous intéresse ?</p>
+            <a routerLink="/contact" class="cta-button" 
+               [style.border-color]="dataService.homeData()?.primary_color" 
+               [style.color]="dataService.homeData()?.primary_color">
+              Me contacter pour ce service
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  } @else if (dataService.errorStatus()) {
+    <div class="error-wrapper-full">
+      <div class="error-container">
+        <div class="error-icon">⚠️</div>
+        <h2>Service introuvable</h2>
+        <p>Impossible de charger les détails.</p>
+        <button (click)="retryLoad()" class="retry-btn">Réessayer</button>
+      </div>
+    </div>
+
+} @else {
+  <div class="detail-container skeleton-active">
+    <div class="skeleton-back-nav"></div>
+    <div class="detail-card skeleton">
+      <div class="header-section">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-price-badge"></div>
+      </div>
+      <div class="content-section">
+        <div class="skeleton-label"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line short"></div>
+      </div>
+      <div class="action-section">
+        <div class="skeleton-btn"></div>
+      </div>
+    </div>
+  </div>
+}
+
+  @if (next(); as next) {
+    <a [routerLink]="['/services', next.id]" class="side-nav next" title="Suivant">
+      <span class="arrow">›</span>
+    </a>
+  }
+</div>

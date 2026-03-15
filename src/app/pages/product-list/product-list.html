@@ -1,0 +1,66 @@
+<div class="products-container">
+  <h2 [style.color]="dataService.homeData()?.primary_color">Produits disponibles</h2>
+  <div class="products-grid">
+    @if (dataService.productList().length > 0) {
+      @for (product of dataService.productList(); track product.id) {
+        <div class="product-card">
+          @if (product.image) {
+            <div class="card-bg-image" [style.background-image]="'url(' + product.image + ')'"></div>
+          }
+          <div class="card-content">
+            <h3>{{ product.name }}</h3>
+            @if (product.description){
+            <p>Description : {{ product.description }}</p>}
+            <p>Ingredients : {{ product.ingredients }}</p>
+            @if (product.size){
+              <p>Taille : {{product.size | cm}}</p>
+            }
+            @if (product.sauce){
+              <p>Sauce : {{product.sauce}}</p>
+            }
+            @if (product.other){
+              <p>{{ product.other }}</p>
+            }
+            <div class="card-footer">
+              <div class="price-tag" [style.background-color]="dataService.homeData()?.primary_color">
+                @if (product.is_on_quote){
+                <span>Sur commande uniquement</span>}
+                @else{
+                  {{ product.price | ariary }}
+                }
+              </div>
+              <a [routerLink]="['/products', product.id]" 
+            [queryParams]="categoryId() ? { category: categoryId() } : {}" class="details-btn">
+                Voir détail
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    } @else if (dataService.errorStatus()) {
+      <div class="error-wrapper-full">
+        <div class="error-container">
+          <div class="error-icon">⚠️</div>
+          <h2>Service indisponible</h2>
+          <p>Impossible de charger les produits.</p>
+          <button (click)="dataService.productList()" class="retry-btn">Réessayer</button>
+        </div>
+      </div>
+    } @else {
+      @for (i of [1,2,3,4,5,6]; track i) {
+        <div class="software-card skeleton">
+          <div class="card-content">
+            <div class="skeleton-title"></div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text"></div>
+            <div class="skeleton-text short"></div>
+            <div class="card-footer">
+              <div class="skeleton-price"></div>
+              <div class="skeleton-btn"></div>
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>

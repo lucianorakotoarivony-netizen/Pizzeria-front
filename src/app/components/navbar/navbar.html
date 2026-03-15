@@ -1,0 +1,35 @@
+<nav class="navbar" [style.border-bottom]="'2px solid ' + dataService.homeData()?.primary_color">
+    <div class="logo-group">
+        @if (dataService.homeData(); as home) {
+            <span class="site-name">{{ home.site_name }}</span>
+            <span class="tagline">{{ home.tagline }}</span>
+        } @else {
+            <span></span>
+        }
+    </div>
+
+    <ul class="nav-links">
+        <!-- Dropdown Produits -->
+         <li><a routerLink="/services" routerLinkActive="active">Service</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" routerLink="/products" routerLinkActive="active">Produits</a>
+            <ul class="dropdown-menu">
+                @for (category of dataService.categoryList(); track category.id) {
+                    <li>
+                        <a [routerLink]="['/products']" [queryParams]="{ category: category.id }" routerLinkActive="active">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+        <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
+        <li><a routerLink="/about" routerLinkActive="active">A propos</a></li>
+    </ul>
+
+    @if (dataService.homeData(); as home){
+        <div class="availability">
+            <span class="dot"></span> {{ home.availability }}
+        </div>
+    }
+</nav>

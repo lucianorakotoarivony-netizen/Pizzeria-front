@@ -1,0 +1,75 @@
+<div class="contact-page-wrapper">
+
+  @if (dataService.contactData()) {
+    <div class="contact-grid">
+      <div class="info-side" [style.background-color]="dataService.homeData()?.primary_color">
+        <h3>Me joindre</h3>
+        <div class="contact-methods">
+          <div class="method-item">
+            <div class="icon-wrapper">📞</div>
+            <div class="text-wrapper">
+              <span class="label">Téléphone</span>
+              <a [href]="'tel:' + dataService.contactData()?.phone" class="value">
+                {{ dataService.contactData()?.phone }}
+              </a>
+            </div>
+          </div>
+          <div class="method-item">
+            <div class="icon-wrapper">📧</div>
+            <div class="text-wrapper">
+              <span class="label">Email</span>
+              <a [href]="'mailto:' + dataService.contactData()?.email" class="value">
+                {{ dataService.contactData()?.email }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-side">
+        <h2>Envoyez un message</h2>
+        <div class="maintenance-container">
+          <div class="maintenance-badge">
+            <span class="icon">🛠️</span>
+            <p><strong>Formulaire en construction</strong></p>
+            <small>Utilisez les coordonnées ci-contre pour me contacter directement.</small>
+          </div>
+
+          <form class="contact-form disabled-view">
+            <div class="form-group">
+              <label>Votre Nom</label>
+              <input type="text" disabled placeholder="Bientôt disponible...">
+            </div>
+            <div class="form-group">
+              <label>Message</label>
+              <textarea rows="4" disabled placeholder="Bientôt disponible..."></textarea>
+            </div>
+            <button type="button" class="disabled-btn">Envoi désactivé</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  } @else if (dataService.errorStatus()) {
+    <div class="error-container">
+      <div class="error-icon">⚠️</div>
+      <h2>Service indisponible</h2>
+      <p>Impossible de charger les infos de contact.</p>
+      <button (click)="dataService.loadContactData()" class="retry-btn">Réessayer</button>
+    </div>
+
+  } @else {
+    <div class="contact-grid skeleton-active">
+      <div class="info-side skeleton-bg">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+      </div>
+      <div class="form-side">
+        <div class="skeleton-title-dark"></div>
+        <div class="skeleton-input"></div>
+        <div class="skeleton-input"></div>
+        <div class="skeleton-button"></div>
+      </div>
+    </div>
+  }
+</div>

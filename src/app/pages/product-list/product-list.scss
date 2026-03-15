@@ -1,0 +1,137 @@
+/* --- Mise en page Globale --- */
+.products-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+/* --- Style des Cartes --- */
+.product-card {
+  position: relative;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+
+  .card-bg-image {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    z-index: 0;
+    background-size: contain; 
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.2; // Très faible pour laisser le texte prioritaire
+    transform: rotate(-5deg);
+    filter: grayscale(100%);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+
+  &:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+
+    .card-bg-image {
+      opacity: 0.3;           // Devient plus présent
+      transform: rotate(0deg) scale(1.1); // Se remet droit et grandit
+      filter: grayscale(0%);   // Reprend ses couleurs d'origine
+    }
+  }
+
+  /* --- Contenu (Z-index pour passer devant l'image) --- */
+  .card-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    flex-grow: 1;
+  }
+
+  h3 { margin: 0; font-size: 1.5rem; color: #1a1a1a; font-weight: 600; }
+  p { margin: 0; color: #666; line-height: 1.6; flex-grow: 1; }
+
+  .price-tag {
+    align-self: flex-start;
+    padding: 10px 22px;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+}
+
+/* --- Footer de la carte --- */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.details-btn {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    opacity: 0.7;
+    border-bottom-color: currentColor;
+  }
+}
+
+.error-container {
+  text-align: center; padding: 60px; background: #fff5f5; border-radius: 20px; border: 1px solid #feb2b2;
+  .error-icon { font-size: 3rem; }
+  .retry-btn { margin-top: 20px; padding: 12px 25px; background: #c53030; color: white; border: none; border-radius: 8px; cursor: pointer; }
+}
+
+.software-card.skeleton {
+  pointer-events: none;
+
+  .skeleton-title { height: 28px; width: 70%; background: #eee; border-radius: 6px; margin-bottom: 20px; }
+  .skeleton-text { 
+    height: 14px; width: 100%; background: #f5f5f5; 
+    border-radius: 4px; margin-bottom: 10px; 
+    &.short { width: 40%; }
+  }
+  .skeleton-price { height: 35px; width: 90px; background: #eee; border-radius: 20px; }
+  .skeleton-btn { height: 35px; width: 100px; background: #eee; border-radius: 8px; }
+
+  // L'animation Shimmer
+  .skeleton-title, .skeleton-text, .skeleton-price, .skeleton-btn {
+    background: linear-gradient(90deg, #f0f0f0 25%, #f9f9f9 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+}
+
+/* --- ANIMATIONS & ETATS --- */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
